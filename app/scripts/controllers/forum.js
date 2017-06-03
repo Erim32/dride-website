@@ -23,9 +23,17 @@ angular
         $scope.newPosts = 1;
 
         $scope.initForum = function() {
-
+            
             $scope.threads = threads;
 
+            $scope.filters  = [{title: 'New',     orderFilter:'post.created'},
+                               {title: 'Trending',    orderFilter:'post.lastUpdate'},
+                               {title: 'Most Viewed', orderFilter:'post.cmntsCount'}
+                              ];
+
+
+            $scope.selectedFilter = $scope.filters[0];
+            
             $mixpanel.track('Forum visit');
 
             // Retrieve Firebase Messaging object.
@@ -38,6 +46,10 @@ angular
 
         $scope.openThred = function() {
             askQuestion.openThred();
+        };
+
+        $scope.setSelectFilter = function(filter){
+            $scope.selectedFilter = filter;
         };
     })
     .filter("reverse", function() {
@@ -70,4 +82,22 @@ angular
 
             return value + (tail || " …");
         };
+    })
+    .filter('filterPosts', function () {
+    return function (posts, selected) {
+        var filtered = [];
+        for (var i = 0; i < posts.length; i++) {
+            filtered.push(posts[i]);
+        }
+        filtered.sort(function(a, b) {
+            if(selected == 'post.cmntsCount')
+                return a.cmntsCount - b.cmntsCount;
+            if(selected == 'post.lastUpdate')
+                return a.lastUpdate - b.lastUpdate;
+            else
+                return a.created - b.created;
+        });
+        filtered.reverse();
+        return filtered;
+    };
     });
