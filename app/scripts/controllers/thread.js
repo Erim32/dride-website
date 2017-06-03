@@ -109,10 +109,6 @@ angular.module('drideApp')
            $mixpanel.track('posted a comment');
 
        })
-
-
-
-
       }
 
 
@@ -153,6 +149,7 @@ angular.module('drideApp')
           });
         }
       }
-    })
+    });
+
 
 
