@@ -24,8 +24,8 @@
                     <div class="col-md-8 col-xs-12 padS40 partRow2">
                         <h2>
 							{{post.title}}
-							<span class="ago hidden-xs">Created {{post.created | timeAgo}} | update {{post.lastUpdate | timeAgo}} | com = {{post.cmntsCount}}</span>
-						</h2>
+							<span class="ago hidden-xs">{{post.lastUpdate | timeAgo}}</span>
+              </h2>
                         <p class="promoDesc" >
                             {{post.description | cut:true:200:' ...'}}
                         </p>
